@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women's Premium Collection - StyleSphere</title>
+    <!-- Load Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font family -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+        /* Custom scrollbar styling (aesthetic enhancement) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f472b6; /* Accent pink */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #db2777;
+        }
+    </style>
+    <!-- Configure Tailwind to use custom colors/shadows -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0f172a',
+                        'accent-pink': '#ec4899', /* A vibrant, sophisticated pink */
+                        'product-bg': '#ffffff',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Load Lucide Icons for aesthetic UI elements (used in grid and filters) -->
+    <script type="module" src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- 1. HEADER / NAVIGATION BAR (UPDATED) -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-20 items-center justify-between">
+
+                <!-- Logo and Navigation Links -->
+                <div class="flex items-center space-x-8 lg:space-x-12">
+                    <!-- Logo -->
+                    <div class="flex-shrink-0">
+                        <img src="./Assets/Print_page-0001.jpg" style="width: 120px;"
+                            alt="Company Logo"
+                            class="w-16 h-12 rounded-lg object-cover"
+                            onerror="this.onerror=null; this.src='https://placehold.co/64x48/0f172a/ec4899?text=SS+Logo'">
+                    </div>
+                    <!-- Navigation Links -->
+                    <nav class="hidden lg:flex space-x-6">
+                        <!-- 'pink-500' changed to 'accent-pink' for consistency -->
+                        <a href="./mens.html" class="text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">MEN</a>
+                        <a href="#" class="text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">WOMEN</a>
+                        <a href="#" class="text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">KIDS</a>
+                        <a href="#" class="text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">HOME</a>
+                        <a href="#" class="text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">BEAUTY</a>
+                        <a href="#" class="text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">GENZ</a>
+                        <a href="#" class="relative text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">
+                            STUDIO
+                            <span class="absolute -top-3 right-0 -mr-4 text-xs font-bold text-red-500 bg-red-100 px-1 rounded-full">NEW</span>
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Search & Actions -->
+                <div class="flex items-center space-x-4 lg:space-x-8">
+                    <!-- Search -->
+                    <div class="relative w-full max-w-xs md:max-w-md hidden md:block">
+                        <!-- 'focus:ring-pink-500' changed to 'focus:ring-accent-pink' -->
+                        <input type="text" placeholder="Search for products, brands and more"
+                                class="w-full pl-12 pr-4 py-3 text-sm bg-gray-100 border-none rounded-lg focus:ring-2 focus:ring-accent-pink focus:outline-none">
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" 
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+
+                    <!-- User Actions (Now using custom dropdowns) -->
+                    <div class="flex space-x-4 lg:space-x-8 items-center">
+                        
+                        <!-- Profile Dropdown Container -->
+                        <div class="relative">
+                            <!-- 'hover:text-pink-500' changed to 'hover:text-accent-pink' -->
+                            <a href="#" id="profile-toggle" onclick="toggleDropdown('profile')"
+                               class="flex flex-col items-center text-xs text-gray-700 hover:text-accent-pink transition">
+                                <svg class="h-6 w-6 mb-1 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                                Profile
+                            </a>
+                            <!-- Profile Dropdown Menu -->
+                            <div id="profile-dropdown" class="absolute right-0 mt-3 w-64 bg-white rounded-lg shadow-xl border border-gray-100 z-50 p-4 hidden">
+                                <p class="text-sm font-semibold mb-2">Welcome</p>
+                                <p class="text-xs text-gray-500 mb-4">To access account and manage orders</p>
+                                <!-- 'border-pink-500', 'text-pink-500', 'hover:bg-pink-50' changed to 'accent-pink'/'pink-50' -->
+                                <button class="w-full text-center border border-accent-pink text-accent-pink px-4 py-2 text-sm rounded-md font-medium hover:bg-pink-50"
+                                        data-bs-toggle="modal" data-bs-target="#authModal" onclick="closeAllDropdowns()">
+                                    Login / Sign Up
+                                </button>
+                                <div class="mt-4 border-t pt-2">
+                                    <a href="#" class="block text-sm py-1 text-gray-700 hover:text-accent-pink">My Orders</a>
+                                    <a href="#" class="block text-sm py-1 text-gray-700 hover:text-accent-pink">My Account</a>
+                                    <a href="#" class="block text-sm py-1 text-gray-700 hover:text-accent-pink">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wishlist Dropdown Container -->
+                        <div class="relative hidden sm:block">
+                            <a href="#" id="wishlist-toggle" onclick="toggleDropdown('wishlist')"
+                               class="flex flex-col items-center text-xs text-gray-700 hover:text-accent-pink transition">
+                                <svg class="h-6 w-6 mb-1 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 
+                                            0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                                Wishlist
+                            </a>
+                            <!-- Wishlist Dropdown Menu -->
+                            <div id="wishlist-dropdown" class="absolute right-0 mt-3 w-64 bg-white rounded-lg shadow-xl border border-gray-100 z-50 p-4 hidden">
+                                <p class="text-sm font-semibold text-center mb-4">Your Wishlist is Empty</p>
+                                <!-- 'bg-pink-500' changed to 'bg-accent-pink' -->
+                                <button class="w-full text-center bg-accent-pink text-white px-4 py-2 text-sm rounded-md font-medium hover:bg-pink-600 transition">
+                                    Start Shopping
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Bag Dropdown Container (Updated with counter for JS compatibility) -->
+                        <div class="relative">
+                            <a href="#" id="bag-toggle" onclick="toggleDropdown('bag')"
+                               class="flex flex-col items-center text-xs text-gray-700 hover:text-accent-pink transition">
+                                <svg class="h-6 w-6 mb-1 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                                </svg>
+                                Bag
+                                <!-- Dynamic Counter (Added back for JS compatibility) -->
+                                <span id="bag-count" class="absolute top-0 right-1 bg-accent-pink text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center transform translate-x-1 -translate-y-1">0</span>
+                            </a>
+                            <!-- Bag Dropdown Menu -->
+                            <div id="bag-dropdown" class="absolute right-0 mt-3 w-64 bg-white rounded-lg shadow-xl border border-gray-100 z-50 p-4 hidden">
+                                <p class="text-sm font-semibold text-center mb-4">Your Bag is Empty</p>
+                                <!-- 'bg-pink-500' changed to 'bg-accent-pink' -->
+                                <button class="w-full text-center bg-accent-pink text-white px-4 py-2 text-sm rounded-md font-medium hover:bg-pink-600 transition">
+                                    Start Shopping
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. MAIN CONTENT LAYOUT -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 pb-12">
+
+        <!-- Category Header and Breadcrumbs -->
+        <div class="mb-6">
+            <p class="text-sm text-gray-500 mb-1">Home / Apparel / <span class="text-primary-dark font-medium">Women's Dresses & Ethnic Wear</span></p>
+            <h1 class="text-3xl font-extrabold text-primary-dark">Women's Collection (<span id="product-count">0</span> Items)</h1>
+        </div>
+
+        <!-- Main Grid: Filter Sidebar + Product Grid -->
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+            
+            <!-- 2.1. FILTER SIDEBAR -->
+            <aside class="lg:col-span-3 hidden lg:block">
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 sticky top-[92px]">
+                    <h3 class="text-lg font-bold text-primary-dark mb-4 border-b pb-2">Filters</h3>
+
+                    <!-- Filter Section: PRICE -->
+                    <div class="py-4 border-b border-gray-200">
+                        <h4 class="font-semibold text-sm mb-3 text-gray-700">PRICE RANGE</h4>
+                        <div class="space-y-2 text-sm" id="price-filters">
+                            <!-- Checkboxes added dynamically/statically with data-price attribute -->
+                            <label class="flex items-center text-gray-600 hover:text-primary-dark transition-colors duration-200 cursor-pointer">
+                                <input type="checkbox" data-filter-type="price" data-price-min="300" data-price-max="800" class="price-filter w-4 h-4 rounded text-accent-pink focus:ring-accent-pink mr-2">
+                                ₹300 - ₹800
+                            </label>
+                            <label class="flex items-center text-gray-600 hover:text-primary-dark transition-colors duration-200 cursor-pointer">
+                                <input type="checkbox" data-filter-type="price" data-price-min="801" data-price-max="2000" class="price-filter w-4 h-4 rounded text-accent-pink focus:ring-accent-pink mr-2">
+                                ₹801 - ₹2,000
+                            </label>
+                            <label class="flex items-center text-gray-600 hover:text-primary-dark transition-colors duration-200 cursor-pointer">
+                                <input type="checkbox" data-filter-type="price" data-price-min="2001" data-price-max="99999" class="price-filter w-4 h-4 rounded text-accent-pink focus:ring-accent-pink mr-2">
+                                Above ₹2,000
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Filter Section: BRAND -->
+                    <div class="py-4 border-b border-gray-200">
+                        <h4 class="font-semibold text-sm mb-3 text-gray-700">BRAND</h4>
+                        <div class="space-y-2 text-sm h-32 overflow-y-auto pr-2" id="brand-filters">
+                            <!-- Brands will be dynamically generated here -->
+                        </div>
+                    </div>
+
+                    <!-- Filter Section: SIZE -->
+                    <div class="py-4 border-b border-gray-200">
+                        <h4 class="font-semibold text-sm mb-3 text-gray-700">SIZE</h4>
+                        <div class="flex flex-wrap gap-2 text-sm" id="size-filters">
+                            <!-- Sizes will be dynamically generated here -->
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 2.2. PRODUCT GRID -->
+            <section class="lg:col-span-9">
+                
+                <!-- Sort Dropdown -->
+                <div class="flex justify-end mb-4">
+                    <div class="relative inline-block">
+                        <select id="sort-dropdown" class="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-accent-pink transition-colors duration-200 text-sm font-medium">
+                            <option value="recommended">Sort By: Recommended</option>
+                            <option value="newest">Newest First</option>
+                            <option value="price_asc">Price: Low to High</option>
+                            <option value="price_desc">Price: High to Low</option>
+                            <option value="discount_desc">Best Discount</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Grid Container -->
+                <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                    <!-- Products will be injected here by JavaScript -->
+                </div>
+
+                <!-- Empty State Message -->
+                <div id="empty-state" class="hidden text-center py-16">
+                    <i data-lucide="frown" class="w-12 h-12 mx-auto text-gray-400 mb-4"></i>
+                    <h2 class="text-xl font-bold text-gray-700">No matching products found.</h2>
+                    <p class="text-gray-500">Try adjusting your filters or search terms.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 3. JAVASCRIPT LOGIC -->
+    <script>
+        // --- 3.1. PRODUCT DATA ---
+        const allProducts = [
+            { id: 1, brand: 'Vero Moda', name: 'Printed Rayon A-Line Dress', price: 1299, originalPrice: 3999, discount: 68, size: ['S', 'M', 'L'], image: 'https://placehold.co/300x400/fecdd3/a52a2a?text=A-Line+Dress' },
+            { id: 2, brand: 'Libas', name: 'Solid Georgette Kurta Set', price: 1850, originalPrice: 4500, discount: 59, size: ['M', 'L', 'XL'], image: 'https://placehold.co/300x400/94a3b8/ffffff?text=Ethnic+Kurta+Set' },
+            { id: 3, brand: 'Allen Solly', name: 'Slim Fit Formal Trousers', price: 999, originalPrice: 2499, discount: 60, size: ['XS', 'S', 'M', 'L'], image: 'https://placehold.co/300x400/0f172a/ffffff?text=Formal+Trousers' },
+            { id: 4, brand: 'HRX', name: 'High-Support Sports Bra', price: 549, originalPrice: 1099, discount: 50, size: ['S', 'M'], image: 'https://placehold.co/300x400/22c55e/ffffff?text=Sports+Bra' },
+            { id: 5, brand: 'Roadster', name: 'Washed Denim Jeans', price: 1499, originalPrice: 2999, discount: 50, size: ['28', '30', '32'], image: 'https://placehold.co/300x400/3b82f6/ffffff?text=Denim+Jeans' },
+            { id: 6, brand: 'Libas', name: 'Embroidered Chiffon Saree', price: 3100, originalPrice: 6200, discount: 50, size: ['Free'], image: 'https://placehold.co/300x400/7c3aed/ffffff?text=Chiffon+Saree' },
+            { id: 7, brand: 'Vero Moda', name: 'Classic Black Heels', price: 2150, originalPrice: 4300, discount: 50, size: ['37', '38', '39'], image: 'https://placehold.co/300x400/1c1917/ffffff?text=Black+Heels' },
+            { id: 8, brand: 'HRX', name: 'Active Wear T-Shirt (Pink)', price: 499, originalPrice: 999, discount: 50, size: ['XS', 'S', 'M'], image: 'https://placehold.co/300x400/f9a8d4/831843?text=Active+T-Shirt' },
+            { id: 9, brand: 'Roadster', name: 'Striped Casual Top', price: 750, originalPrice: 1500, discount: 50, size: ['S', 'M', 'L'], image: 'https://placehold.co/300x400/f3f4f6/333333?text=Striped+Top' },
+            { id: 10, brand: 'Libas', name: 'Heavy Anarkali Suit', price: 4500, originalPrice: 9000, discount: 50, size: ['L', 'XL'], image: 'https://placehold.co/300x400/99f6e4/0f172a?text=Anarkali+Suit' },
+        ];
+
+        // --- 3.2. STATE MANAGEMENT ---
+        const state = {
+            activeBrands: new Set(),
+            activeSizes: new Set(),
+            activePrices: new Set(), // Stores price range keys (e.g., '300-800')
+            sortBy: 'recommended',
+            bagCount: 0,
+        };
+
+        // --- 3.3. DOM ELEMENTS ---
+        const elements = {
+            productGrid: document.getElementById('product-grid'),
+            productCount: document.getElementById('product-count'),
+            emptyState: document.getElementById('empty-state'),
+            sortDropdown: document.getElementById('sort-dropdown'),
+            brandFilters: document.getElementById('brand-filters'),
+            sizeFilters: document.getElementById('size-filters'),
+            priceFilters: document.getElementById('price-filters'),
+            // Note: bagCount element ID is now nested inside the new header structure
+            bagCount: document.getElementById('bag-count') 
+        };
+
+
+        // --- 3.4. UTILITY FUNCTIONS ---
+
+        /**
+         * Closes all header dropdown menus.
+         */
+        function closeAllDropdowns() {
+            document.getElementById('profile-dropdown').classList.add('hidden');
+            document.getElementById('wishlist-dropdown').classList.add('hidden');
+            document.getElementById('bag-dropdown').classList.add('hidden');
+        }
+
+        /**
+         * Toggles a specific header dropdown menu.
+         * @param {string} id - The base ID of the dropdown ('profile', 'wishlist', or 'bag').
+         */
+        function toggleDropdown(id) {
+            const dropdownId = `${id}-dropdown`;
+            const dropdownElement = document.getElementById(dropdownId);
+            
+            // Close all other dropdowns
+            ['profile', 'wishlist', 'bag'].forEach(otherId => {
+                if (otherId !== id) {
+                    document.getElementById(`${otherId}-dropdown`).classList.add('hidden');
+                }
+            });
+
+            // Toggle the current one
+            dropdownElement.classList.toggle('hidden');
+        }
+
+        // Expose functions to global scope for use in onclick attribute
+        window.toggleDropdown = toggleDropdown;
+        window.closeAllDropdowns = closeAllDropdowns;
+
+
+        /**
+         * Creates the HTML string for a single product card.
+         * @param {object} product - The product data.
+         * @returns {string} The HTML string.
+         */
+        function createProductCardHTML(product) {
+            const finalPrice = product.price;
+            const originalPrice = product.originalPrice;
+            const discountPercentage = product.discount;
+
+            return `
+                <div class="product-card bg-product-bg rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 group cursor-pointer border border-gray-100">
+                    <div class="relative overflow-hidden">
+                        <img src="${product.image}" alt="${product.name}" 
+                             class="w-full h-auto object-cover transform transition-transform duration-500 group-hover:scale-[1.03] rounded-t-xl">
+                        <!-- Wishlist Icon -->
+                        <button class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-accent-pink hover:scale-110 transition-all duration-300">
+                            <i data-lucide="heart" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    <div class="p-3 sm:p-4">
+                        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">${product.brand}</p>
+                        <h3 class="font-bold text-primary-dark truncate mt-1">${product.name}</h3>
+                        <div class="flex items-center space-x-2 text-base mt-2">
+                            <span class="font-bold text-primary-dark">₹${finalPrice.toLocaleString('en-IN')}</span>
+                            <span class="text-xs text-gray-400 line-through">₹${originalPrice.toLocaleString('en-IN')}</span>
+                            <span class="text-xs font-semibold text-green-600">(${discountPercentage}% OFF)</span>
+                        </div>
+                        <!-- Quick Add To Bag Button -->
+                        <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <button data-product-id="${product.id}" onclick="addToBag(${product.id})" class="w-full text-center bg-accent-pink text-white py-2 rounded-lg text-sm font-semibold hover:bg-pink-600 active:scale-[0.98] transition-all duration-200 shadow-md shadow-pink-300">
+                                ADD TO BAG
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // --- 3.5. CORE FUNCTIONALITY (FILTERING & SORTING) ---
+
+        /**
+         * Filters the product list based on the current state.
+         * @param {Array} products - The list of products to filter.
+         * @returns {Array} The filtered list.
+         */
+        function applyFilters(products) {
+            return products.filter(product => {
+                // 1. BRAND FILTER
+                const brandMatch = state.activeBrands.size === 0 || state.activeBrands.has(product.brand);
+
+                // 2. SIZE FILTER
+                const sizeMatch = state.activeSizes.size === 0 || product.size.some(s => state.activeSizes.has(s));
+
+                // 3. PRICE FILTER
+                let priceMatch = state.activePrices.size === 0;
+                if (!priceMatch) {
+                    for (const rangeKey of state.activePrices) {
+                        const [minStr, maxStr] = rangeKey.split('-');
+                        const min = parseInt(minStr);
+                        const max = parseInt(maxStr);
+
+                        if (product.price >= min && product.price <= max) {
+                            priceMatch = true;
+                            break;
+                        }
+                    }
+                }
+
+                return brandMatch && sizeMatch && priceMatch;
+            });
+        }
+
+        /**
+         * Sorts the product list based on the current state.
+         * @param {Array} products - The list of products to sort.
+         * @returns {Array} The sorted list.
+         */
+        function applySorting(products) {
+            // Clone the array to avoid modifying the original
+            const sortedProducts = [...products];
+
+            switch (state.sortBy) {
+                case 'price_asc':
+                    sortedProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price_desc':
+                    sortedProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'discount_desc':
+                    sortedProducts.sort((a, b) => b.discount - a.discount);
+                    break;
+                case 'newest':
+                    // In a real app, this would use a 'dateAdded' property. Here, we reverse the default list.
+                    sortedProducts.reverse();
+                    break;
+                case 'recommended':
+                default:
+                    // Default/recommended order (no change)
+                    break;
+            }
+            return sortedProducts;
+        }
+
+        /**
+         * Main function to filter, sort, and render products.
+         */
+        function renderProducts() {
+            // 1. Filter
+            const filteredProducts = applyFilters(allProducts);
+
+            // 2. Sort
+            const finalProducts = applySorting(filteredProducts);
+
+            // 3. Update UI
+            elements.productCount.textContent = finalProducts.length;
+            elements.productGrid.innerHTML = ''; // Clear previous products
+
+            if (finalProducts.length === 0) {
+                elements.emptyState.classList.remove('hidden');
+            } else {
+                elements.emptyState.classList.add('hidden');
+                const productHTML = finalProducts.map(createProductCardHTML).join('');
+                elements.productGrid.innerHTML = productHTML;
+            }
+        }
+
+        // --- 3.6. INTERACTION HANDLERS ---
+
+        /**
+         * Populates unique brands and sizes into the filter sidebar HTML.
+         */
+        function generateFilterOptions() {
+            const brands = [...new Set(allProducts.map(p => p.brand))].sort();
+            const sizes = [...new Set(allProducts.flatMap(p => p.size))].sort((a, b) => {
+                // Simple sort for common sizes (XS, S, M, L, XL, XXL)
+                const order = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '28', '30', '32', '34', 'Free'];
+                return order.indexOf(a) - order.indexOf(b);
+            });
+
+            // Populate Brands
+            elements.brandFilters.innerHTML = brands.map(brand => `
+                <label class="flex items-center text-gray-600 hover:text-primary-dark transition-colors duration-200 cursor-pointer">
+                    <input type="checkbox" data-filter-type="brand" value="${brand}" class="brand-filter w-4 h-4 rounded text-accent-pink focus:ring-accent-pink mr-2">
+                    ${brand}
+                </label>
+            `).join('');
+
+            // Populate Sizes
+            elements.sizeFilters.innerHTML = sizes.map(size => `
+                <button data-filter-type="size" value="${size}" class="size-filter px-3 py-1 border border-gray-300 rounded-full hover:bg-pink-100 transition-colors duration-200" data-active="false">
+                    ${size}
+                </button>
+            `).join('');
+        }
+
+        /**
+         * Handles filter changes from checkboxes and size buttons.
+         * @param {Event} e - The event object.
+         */
+        function handleFilterChange(e) {
+            const target = e.target;
+            const filterType = target.getAttribute('data-filter-type');
+
+            if (filterType === 'brand' || filterType === 'price') {
+                const value = filterType === 'brand' ? target.value : `${target.getAttribute('data-price-min')}-${target.getAttribute('data-price-max')}`;
+
+                if (target.checked) {
+                    state[filterType === 'brand' ? 'activeBrands' : 'activePrices'].add(value);
+                } else {
+                    state[filterType === 'brand' ? 'activeBrands' : 'activePrices'].delete(value);
+                }
+            } else if (filterType === 'size') {
+                const value = target.value;
+                const isActive = target.getAttribute('data-active') === 'true';
+
+                if (isActive) {
+                    state.activeSizes.delete(value);
+                    target.classList.remove('bg-primary-dark', 'text-white', 'border-primary-dark');
+                    target.classList.add('border-gray-300');
+                    target.setAttribute('data-active', 'false');
+                } else {
+                    state.activeSizes.add(value);
+                    target.classList.add('bg-primary-dark', 'text-white', 'border-primary-dark');
+                    target.classList.remove('border-gray-300');
+                    target.setAttribute('data-active', 'true');
+                }
+            }
+            renderProducts();
+        }
+
+        /**
+         * Handles the change in the sort dropdown.
+         */
+        function handleSortChange(e) {
+            state.sortBy = e.target.value;
+            renderProducts();
+        }
+
+        /**
+         * Handles the "Add to Bag" action.
+         * @param {number} productId - The ID of the product.
+         */
+        function addToBag(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            if (product) {
+                state.bagCount++;
+                elements.bagCount.textContent = state.bagCount;
+                console.log(`Added ${product.name} to bag. New count: ${state.bagCount}`);
+                // Simple feedback message (since we can't use alert)
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.textContent = `${product.name} added!`;
+                feedbackDiv.className = 'fixed bottom-5 right-5 bg-green-500 text-white px-4 py-2 rounded-lg shadow-xl animate-pulse z-[9999]';
+                document.body.appendChild(feedbackDiv);
+                setTimeout(() => feedbackDiv.remove(), 2000);
+            }
+        }
+        
+        // Expose function to global scope for use in onclick attribute
+        window.addToBag = addToBag;
+
+        // --- 3.7. INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Initialize Lucide Icons (still needed for the main product grid/filters)
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            // 2. Generate Brand and Size options based on product data
+            generateFilterOptions();
+
+            // 3. Attach Event Listeners
+            // Listen for changes on the filter containers (event delegation)
+            elements.brandFilters.addEventListener('change', handleFilterChange);
+            elements.priceFilters.addEventListener('change', handleFilterChange);
+            elements.sizeFilters.addEventListener('click', handleFilterChange); 
+            
+            // Listen for changes on the sort dropdown
+            elements.sortDropdown.addEventListener('change', handleSortChange);
+
+            // 4. Initial Render
+            renderProducts();
+        });
+    </script>
+</body>
+</html>

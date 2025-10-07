@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard - RM1 Coders Hub</title>
+  <link rel="stylesheet" href="admin-dashboard.css" />
+</head>
+<body>
+
+  <header>
+    <img src="SWACHIFY gif.gif" alt="RM1 Coders Hub Logo" class="logo" />
+    <h1>RM1 Coders Hub Admin Dashboard</h1>
+    <button id="logoutBtn">Logout</button>
+
+    
+  </header>
+
+  <div class="container">
+    <nav class="sidebar">
+      <ul>
+        <li data-section="dashboard" class="active">Dashboard</li>
+        <li data-section="orders">Orders</li>
+        <li data-section="products">Products</li>
+        <li data-section="customers">Customers</li>
+        <li data-section="settings">Settings</li>
+      </ul>
+    </nav>
+
+    <main>
+      <section id="dashboard" class="content-section active">
+        <h2>Overview</h2>
+        <div class="stats">
+          <div class="stat-card">
+            <h3>1200+</h3>
+            <p>Orders Today</p>
+          </div>
+          <div class="stat-card">
+            <h3>450</h3>
+            <p>Products Available</p>
+          </div>
+          <div class="stat-card">
+            <h3>3500</h3>
+            <p>Active Users</p>
+          </div>
+          <div class="stat-card">
+            <h3>$45,000</h3>
+            <p>Revenue Today</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="orders" class="content-section">
+        <h2>Recent Orders</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Product</th>
+              <th>Status</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#10234</td>
+              <td>Jane Doe</td>
+              <td>Wireless Headphones</td>
+              <td>Shipped</td>
+              <td>$99.99</td>
+            </tr>
+            <tr>
+              <td>#10235</td>
+              <td>John Smith</td>
+              <td>Smart Watch</td>
+              <td>Processing</td>
+              <td>$149.99</td>
+            </tr>
+            <tr>
+              <td>#10236</td>
+              <td>Mary Johnson</td>
+              <td>Laptop</td>
+              <td>Delivered</td>
+              <td>$999.00</td>
+            </tr>
+            <tr>
+                <td>#10237</td>
+                <td>Harish</td>
+                <td>iphone</td>
+                <td>Shipped</td>
+                <td>$350.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="products" class="content-section">
+        <h2>Products</h2>
+<div class="product-controls">
+  <button id="addProductBtn">Add Product</button>
+</div>
+
+<table id="productsTable">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Sample product -->
+    <tr>
+      <td>1</td>
+      <td>Bluetooth Speaker</td>
+      <td>$49.99</td>
+      <td>
+        <button class="edit-btn">Edit</button>
+        <button class="delete-btn">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+        
+        </table>
+      </section>
+
+      <section id="customers" class="content-section">
+        <h2>Customers</h2>
+        <table id="customersTable">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>101</td>
+      <td>Alice Johnson</td>
+      <td>alice@example.com</td>
+      <td><button class="delete-customer-btn">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+
+      </section>
+
+      <section id="settings" class="content-section">
+        <h2>Settings</h2>
+        <form id="settingsForm">
+  <label for="adminName">Admin Name:</label>
+  <input type="text" id="adminName" value="Admin">
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" value="admin@rm1hub.com">
+
+  <button type="submit">Update Info</button>
+</form>
+
+
+  
+
+
+      </section>
+    </main>
+  </div>
+
+  <script src="admin-dashboard.js"></script>
+
+</body>
+</html>

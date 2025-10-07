@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Men's Premium Collection - StyleSphere</title>
+    <!-- Load Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font family -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+        /* Custom scrollbar styling (aesthetic enhancement) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #9ca3af;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+    </style>
+    <!-- Configure Tailwind to use custom colors/shadows -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0f172a',
+                        'accent-red': '#ef4444',
+                        'product-bg': '#ffffff',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Load Lucide Icons for aesthetic UI elements -->
+    <script type="module" src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- 1. HEADER / NAVIGATION BAR -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-20 items-center justify-between">
+
+                <!-- Logo and Navigation Links -->
+                <div class="flex items-center space-x-8 lg:space-x-12">
+                    <!-- Logo -->
+                    <div class="flex-shrink-0">
+                        <img src="./Assets/Print_page-0001.jpg" style="width: 120px;"
+                            alt="Company Logo"
+                            class="w-16 h-12 rounded-lg object-cover"
+                            onerror="this.onerror=null; this.src='https://placehold.co/64x48/0f172a/ec4899?text=SS+Logo'">
+                    </div>
+                    <!-- Navigation Links -->
+                    <nav class="hidden lg:flex space-x-6">
+                        <!-- 'pink-500' changed to 'accent-pink' for consistency -->
+                        <a href="./mens.html" class="text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">MEN</a>
+                        <a href="./womens.html" class="text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">WOMEN</a>
+                        <a href="#" class="text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">KIDS</a>
+                        <a href="#" class="text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">HOME</a>
+                        <a href="#" class="text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">BEAUTY</a>
+                        <a href="#" class="text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">GENZ</a>
+                        <a href="#" class="relative text-sm font-semibold text-gray-700 hover:text-accent-pink transition py-2">
+                            STUDIO
+                            <span class="absolute -top-3 right-0 -mr-4 text-xs font-bold text-red-500 bg-red-100 px-1 rounded-full">NEW</span>
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Search & Actions -->
+                <div class="flex items-center space-x-4 lg:space-x-8">
+                    <!-- Search -->
+                    <div class="relative w-full max-w-xs md:max-w-md hidden md:block">
+                        <!-- 'focus:ring-pink-500' changed to 'focus:ring-accent-pink' -->
+                        <input type="text" placeholder="Search for products, brands and more"
+                                class="w-full pl-12 pr-4 py-3 text-sm bg-gray-100 border-none rounded-lg focus:ring-2 focus:ring-accent-pink focus:outline-none">
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" 
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+
+                    <!-- User Actions (Now using custom dropdowns) -->
+                    <div class="flex space-x-4 lg:space-x-8 items-center">
+                        
+                        <!-- Profile Dropdown Container -->
+                        <div class="relative">
+                            <!-- 'hover:text-pink-500' changed to 'hover:text-accent-pink' -->
+                            <a href="#" id="profile-toggle" onclick="toggleDropdown('profile')"
+                               class="flex flex-col items-center text-xs text-gray-700 hover:text-accent-pink transition">
+                                <svg class="h-6 w-6 mb-1 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                                Profile
+                            </a>
+                            <!-- Profile Dropdown Menu -->
+                            <div id="profile-dropdown" class="absolute right-0 mt-3 w-64 bg-white rounded-lg shadow-xl border border-gray-100 z-50 p-4 hidden">
+                                <p class="text-sm font-semibold mb-2">Welcome</p>
+                                <p class="text-xs text-gray-500 mb-4">To access account and manage orders</p>
+                                <!-- 'border-pink-500', 'text-pink-500', 'hover:bg-pink-50' changed to 'accent-pink'/'pink-50' -->
+                                <button class="w-full text-center border border-accent-pink text-accent-pink px-4 py-2 text-sm rounded-md font-medium hover:bg-pink-50"
+                                        data-bs-toggle="modal" data-bs-target="#authModal" onclick="closeAllDropdowns()">
+                                    Login / Sign Up
+                                </button>
+                                <div class="mt-4 border-t pt-2">
+                                    <a href="#" class="block text-sm py-1 text-gray-700 hover:text-accent-pink">My Orders</a>
+                                    <a href="#" class="block text-sm py-1 text-gray-700 hover:text-accent-pink">My Account</a>
+                                    <a href="#" class="block text-sm py-1 text-gray-700 hover:text-accent-pink">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wishlist Dropdown Container -->
+                        <div class="relative hidden sm:block">
+                            <a href="#" id="wishlist-toggle" onclick="toggleDropdown('wishlist')"
+                               class="flex flex-col items-center text-xs text-gray-700 hover:text-accent-pink transition">
+                                <svg class="h-6 w-6 mb-1 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 
+                                            0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                                Wishlist
+                            </a>
+                            <!-- Wishlist Dropdown Menu -->
+                            <div id="wishlist-dropdown" class="absolute right-0 mt-3 w-64 bg-white rounded-lg shadow-xl border border-gray-100 z-50 p-4 hidden">
+                                <p class="text-sm font-semibold text-center mb-4">Your Wishlist is Empty</p>
+                                <!-- 'bg-pink-500' changed to 'bg-accent-pink' -->
+                                <button class="w-full text-center bg-accent-pink text-white px-4 py-2 text-sm rounded-md font-medium hover:bg-pink-600 transition">
+                                    Start Shopping
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Bag Dropdown Container (Updated with counter for JS compatibility) -->
+                        <div class="relative">
+                            <a href="#" id="bag-toggle" onclick="toggleDropdown('bag')"
+                               class="flex flex-col items-center text-xs text-gray-700 hover:text-accent-pink transition">
+                                <svg class="h-6 w-6 mb-1 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                                </svg>
+                                Bag
+                                <!-- Dynamic Counter (Added back for JS compatibility) -->
+                                <span id="bag-count" class="absolute top-0 right-1 bg-accent-pink text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center transform translate-x-1 -translate-y-1">0</span>
+                            </a>
+                            <!-- Bag Dropdown Menu -->
+                            <div id="bag-dropdown" class="absolute right-0 mt-3 w-64 bg-white rounded-lg shadow-xl border border-gray-100 z-50 p-4 hidden">
+                                <p class="text-sm font-semibold text-center mb-4">Your Bag is Empty</p>
+                                <!-- 'bg-pink-500' changed to 'bg-accent-pink' -->
+                                <button class="w-full text-center bg-accent-pink text-white px-4 py-2 text-sm rounded-md font-medium hover:bg-pink-600 transition">
+                                    Start Shopping
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. MAIN CONTENT LAYOUT -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 pb-12">
+
+        <!-- Category Header and Breadcrumbs -->
+        <div class="mb-6">
+            <p class="text-sm text-gray-500 mb-1">Home / Clothing / <span class="text-primary-dark font-medium">Men's T-Shirts & Polos</span></p>
+            <h1 class="text-3xl font-extrabold text-primary-dark">Men's T-Shirts & Polos (520 Items)</h1>
+        </div>
+
+        <!-- Main Grid: Filter Sidebar (1/4 width) + Product Grid (3/4 width) -->
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+            
+            <!-- 2.1. FILTER SIDEBAR (Hidden on mobile, 3/12 width on desktop) -->
+            <aside class="lg:col-span-3 hidden lg:block">
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 sticky top-[92px]">
+                    <h3 class="text-lg font-bold text-primary-dark mb-4 border-b pb-2">Filters</h3>
+
+                    <!-- Filter Section: PRICE -->
+                    <div class="py-4 border-b border-gray-200">
+                        <h4 class="font-semibold text-sm mb-3 text-gray-700 cursor-pointer flex justify-between items-center group">
+                            PRICE RANGE
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500 group-hover:text-primary-dark transition-transform duration-300"></i>
+                        </h4>
+                        <div class="space-y-2 text-sm">
+                            <label class="flex items-center text-gray-600 hover:text-primary-dark transition-colors duration-200 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded text-accent-red focus:ring-accent-red mr-2">
+                                Rs. 300 - Rs. 500 (150)
+                            </label>
+                            <label class="flex items-center text-gray-600 hover:text-primary-dark transition-colors duration-200 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded text-accent-red focus:ring-accent-red mr-2">
+                                Rs. 501 - Rs. 1000 (280)
+                            </label>
+                            <label class="flex items-center text-gray-600 hover:text-primary-dark transition-colors duration-200 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded text-accent-red focus:ring-accent-red mr-2">
+                                Above Rs. 1000 (90)
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Filter Section: BRAND -->
+                    <div class="py-4 border-b border-gray-200">
+                        <h4 class="font-semibold text-sm mb-3 text-gray-700 cursor-pointer flex justify-between items-center group">
+                            BRAND
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500 group-hover:text-primary-dark transition-transform duration-300"></i>
+                        </h4>
+                        <input type="text" placeholder="Search brands..." class="w-full text-sm p-2 border border-gray-300 rounded-lg mb-2 focus:ring-accent-red focus:border-accent-red">
+                        <div class="space-y-2 text-sm h-32 overflow-y-auto pr-2">
+                            <label class="flex items-center text-gray-600 hover:text-primary-dark transition-colors duration-200 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded text-accent-red focus:ring-accent-red mr-2">
+                                Lyimo (120)
+                            </label>
+                            <label class="flex items-center text-gray-600 hover:text-primary-dark transition-colors duration-200 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded text-accent-red focus:ring-accent-red mr-2">
+                                Seloria (80)
+                            </label>
+                            <label class="flex items-center text-gray-600 hover:text-primary-dark transition-colors duration-200 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded text-accent-red focus:ring-accent-red mr-2">
+                                Roadster (50)
+                            </label>
+                            <label class="flex items-center text-gray-600 hover:text-primary-dark transition-colors duration-200 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded text-accent-red focus:ring-accent-red mr-2">
+                                HRX (40)
+                            </label>
+                            <label class="flex items-center text-gray-600 hover:text-primary-dark transition-colors duration-200 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded text-accent-red focus:ring-accent-red mr-2">
+                                WROGN (35)
+                            </label>
+                            <label class="flex items-center text-gray-600 hover:text-primary-dark transition-colors duration-200 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded text-accent-red focus:ring-accent-red mr-2">
+                                Levi's (25)
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Filter Section: SIZE -->
+                    <div class="py-4 border-b border-gray-200">
+                        <h4 class="font-semibold text-sm mb-3 text-gray-700 cursor-pointer flex justify-between items-center group">
+                            SIZE
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500 group-hover:text-primary-dark transition-transform duration-300"></i>
+                        </h4>
+                        <div class="flex flex-wrap gap-2 text-sm">
+                            <button class="px-3 py-1 border border-gray-300 rounded-full hover:bg-gray-100 transition-colors duration-200">S</button>
+                            <button class="px-3 py-1 bg-primary-dark text-white border border-primary-dark rounded-full">M</button>
+                            <button class="px-3 py-1 border border-gray-300 rounded-full hover:bg-gray-100 transition-colors duration-200">L</button>
+                            <button class="px-3 py-1 border border-gray-300 rounded-full hover:bg-gray-100 transition-colors duration-200">XL</button>
+                            <button class="px-3 py-1 border border-gray-300 rounded-full hover:bg-gray-100 transition-colors duration-200">XXL</button>
+                        </div>
+                    </div>
+
+                    <!-- Filter Section: COLOR -->
+                    <div class="pt-4">
+                        <h4 class="font-semibold text-sm mb-3 text-gray-700 cursor-pointer flex justify-between items-center group">
+                            COLOR
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500 group-hover:text-primary-dark transition-transform duration-300"></i>
+                        </h4>
+                        <div class="flex flex-wrap gap-3 text-sm">
+                            <div class="w-6 h-6 rounded-full bg-red-600 border-2 border-white shadow cursor-pointer hover:scale-110 transition-transform duration-200"></div>
+                            <div class="w-6 h-6 rounded-full bg-blue-600 border-2 border-white shadow cursor-pointer hover:scale-110 transition-transform duration-200"></div>
+                            <div class="w-6 h-6 rounded-full bg-black border-2 border-accent-red shadow cursor-pointer scale-110 transition-transform duration-200"></div>
+                            <div class="w-6 h-6 rounded-full bg-white border border-gray-400 shadow cursor-pointer hover:scale-110 transition-transform duration-200"></div>
+                            <div class="w-6 h-6 rounded-full bg-green-600 border-2 border-white shadow cursor-pointer hover:scale-110 transition-transform duration-200"></div>
+                            <div class="w-6 h-6 rounded-full bg-yellow-600 border-2 border-white shadow cursor-pointer hover:scale-110 transition-transform duration-200"></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 2.2. PRODUCT GRID (12/12 mobile, 9/12 desktop) -->
+            <section class="lg:col-span-9">
+                
+                <!-- Sort Dropdown (Visible on all screens) -->
+                <div class="flex justify-end mb-4">
+                    <div class="relative inline-block">
+                        <select class="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-accent-red transition-colors duration-200 text-sm font-medium">
+                            <option>Sort By: Recommended</option>
+                            <option>Newest First</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                            <option>Top Rated</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                    
+                    <!-- Product Card Component (Repeat 8 times for a good look) -->
+                    <!-- Product 1: T-Shirt -->
+                    <div class="product-card bg-product-bg rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 group cursor-pointer border border-gray-100">
+                        <div class="relative overflow-hidden">
+                            <img src="./Assets/mens/polo.jfif" alt="Blue Polo T-Shirt" 
+                                 class="w-full h-auto object-cover transform transition-transform duration-500 group-hover:scale-[1.03] rounded-t-xl">
+                            <!-- Wishlist Icon -->
+                            <button class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-accent-red hover:scale-110 transition-all duration-300">
+                                <i data-lucide="heart" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <div class="p-3 sm:p-4">
+                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Lyimo</p>
+                            <h3 class="font-bold text-primary-dark truncate mt-1">Men T-Shirt || Polo T Shirt</h3>
+                            <p class="text-sm text-gray-600 mb-2">Polo-S1-54</p>
+                            <div class="flex items-center space-x-2 text-base">
+                                <span class="font-bold text-primary-dark">₹399</span>
+                                <span class="text-xs text-gray-400 line-through">₹3,099</span>
+                                <span class="text-xs font-semibold text-green-600">(87% OFF)</span>
+                            </div>
+                            <!-- Quick View Overlay -->
+                            <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full text-center bg-accent-red text-white py-2 rounded-lg text-sm font-semibold hover:bg-red-600 active:scale-[0.98] transition-all duration-200 shadow-md shadow-red-300">
+                                    ADD TO BAG
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2: Cargo Pants -->
+                    <div class="product-card bg-product-bg rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 group cursor-pointer border border-gray-100">
+                        <div class="relative overflow-hidden">
+                            <img src="./Assets/mens/blackcargo.jfif" alt="Black Cargo Pants" 
+                                 class="w-full h-auto object-cover transform transition-transform duration-500 group-hover:scale-[1.03] rounded-t-xl">
+                            <button class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-accent-red hover:scale-110 transition-all duration-300">
+                                <i data-lucide="heart" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <div class="p-3 sm:p-4">
+                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Lyimo</p>
+                            <h3 class="font-bold text-primary-dark truncate mt-1">Men's Regular Fit Mid Rise Track Pant</h3>
+                            <p class="text-sm text-gray-600 mb-2">Plain Track Pant (TP-64-65)</p>
+                            <div class="flex items-center space-x-2 text-base">
+                                <span class="font-bold text-primary-dark">₹399</span>
+                                <span class="text-xs text-gray-400 line-through">₹3,899</span>
+                                <span class="text-xs font-semibold text-green-600">(90% OFF)</span>
+                            </div>
+                            <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full text-center bg-accent-red text-white py-2 rounded-lg text-sm font-semibold hover:bg-red-600 active:scale-[0.98] transition-all duration-200 shadow-md shadow-red-300">
+                                    ADD TO BAG
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3: Jacket (Best Seller) -->
+                    <div class="product-card bg-product-bg rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 group cursor-pointer border-2 border-yellow-400 relative">
+                        <span class="absolute top-0 left-0 bg-yellow-500 text-primary-dark text-xs font-bold px-3 py-1 rounded-br-lg z-10">Best Seller</span>
+                        <div class="relative overflow-hidden">
+                            <img src="./Assets/mens/jacket.jfif" alt="Lightweight Outerwear Jacket" 
+                                 class="w-full h-auto object-cover transform transition-transform duration-500 group-hover:scale-[1.03] rounded-t-xl">
+                            <button class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-accent-red hover:scale-110 transition-all duration-300">
+                                <i data-lucide="heart" class="w-5 h-5 fill-accent-red text-accent-red"></i>
+                            </button>
+                        </div>
+                        <div class="p-3 sm:p-4">
+                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Lyimo</p>
+                            <h3 class="font-bold text-primary-dark truncate mt-1">Lightweight Outerwear Jacket</h3>
+                            <p class="text-sm text-gray-600 mb-2">J-04-A</p>
+                            <div class="flex items-center space-x-2 text-base">
+                                <span class="font-bold text-primary-dark">₹579</span>
+                                <span class="text-xs text-gray-400 line-through">₹1,999</span>
+                                <span class="text-xs font-semibold text-green-600">(71% OFF)</span>
+                            </div>
+                            <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full text-center bg-accent-red text-white py-2 rounded-lg text-sm font-semibold hover:bg-red-600 active:scale-[0.98] transition-all duration-200 shadow-md shadow-red-300">
+                                    ADD TO BAG
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4: Baseball Cap -->
+                    <div class="product-card bg-product-bg rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 group cursor-pointer border border-gray-100">
+                        <div class="relative overflow-hidden">
+                            <img src="./Assets/mens/baseballcap.jfif" alt="Baseball Cap" 
+                                 class="w-full h-auto object-cover transform transition-transform duration-500 group-hover:scale-[1.03] rounded-t-xl">
+                            <button class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-accent-red hover:scale-110 transition-all duration-300">
+                                <i data-lucide="heart" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <div class="p-3 sm:p-4">
+                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">SELLORIA</p>
+                            <h3 class="font-bold text-primary-dark truncate mt-1">Brand UNISEX NY Baseball Cap</h3>
+                            <p class="text-sm text-gray-600 mb-2">Adjustable Cap</p>
+                            <div class="flex items-center space-x-2 text-base">
+                                <span class="font-bold text-primary-dark">₹239</span>
+                                <span class="text-xs text-gray-400 line-through">₹1,999</span>
+                                <span class="text-xs font-semibold text-green-600">(88% OFF)</span>
+                            </div>
+                            <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full text-center bg-accent-red text-white py-2 rounded-lg text-sm font-semibold hover:bg-red-600 active:scale-[0.98] transition-all duration-200 shadow-md shadow-red-300">
+                                    ADD TO BAG
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 5: Belt (Accessory) -->
+                    <div class="product-card bg-product-bg rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 group cursor-pointer border border-gray-100">
+                        <div class="relative overflow-hidden">
+                            <img src="./Assets/mens/turker.jfif" alt="Tucker Shirt Stay Belt" 
+                                 class="w-full h-auto object-cover transform transition-transform duration-500 group-hover:scale-[1.03] rounded-t-xl">
+                            <button class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-accent-red hover:scale-110 transition-all duration-300">
+                                <i data-lucide="heart" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <div class="p-3 sm:p-4">
+                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">AFEREVZ</p>
+                            <h3 class="font-bold text-primary-dark truncate mt-1">Tucker Shirt Stay Belt</h3>
+                            <p class="text-sm text-gray-600 mb-2">Anti-Slip Technology</p>
+                            <div class="flex items-center space-x-2 text-base">
+                                <span class="font-bold text-primary-dark">₹174</span>
+                                <span class="text-xs text-gray-400 line-through">₹1,499</span>
+                                <span class="text-xs font-semibold text-green-600">(88% OFF)</span>
+                            </div>
+                            <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full text-center bg-accent-red text-white py-2 rounded-lg text-sm font-semibold hover:bg-red-600 active:scale-[0.98] transition-all duration-200 shadow-md shadow-red-300">
+                                    ADD TO BAG
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 6: Sweater -->
+                    <div class="product-card bg-product-bg rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 group cursor-pointer border border-gray-100">
+                        <div class="relative overflow-hidden">
+                            <img src="./Assets/mens/jacket.jfif" alt="Red Crew Neck Sweater" 
+                                 class="w-full h-auto object-cover transform transition-transform duration-500 group-hover:scale-[1.03] rounded-t-xl">
+                            <button class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-accent-red hover:scale-110 transition-all duration-300">
+                                <i data-lucide="heart" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <div class="p-3 sm:p-4">
+                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Roadster</p>
+                            <h3 class="font-bold text-primary-dark truncate mt-1">Solid Crew-Neck Sweater</h3>
+                            <p class="text-sm text-gray-600 mb-2">Wool Blend</p>
+                            <div class="flex items-center space-x-2 text-base">
+                                <span class="font-bold text-primary-dark">₹999</span>
+                                <span class="text-xs text-gray-400 line-through">₹2,499</span>
+                                <span class="text-xs font-semibold text-green-600">(60% OFF)</span>
+                            </div>
+                            <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full text-center bg-accent-red text-white py-2 rounded-lg text-sm font-semibold hover:bg-red-600 active:scale-[0.98] transition-all duration-200 shadow-md shadow-red-300">
+                                    ADD TO BAG
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 7: Sneakers -->
+                    <div class="product-card bg-product-bg rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 group cursor-pointer border border-gray-100">
+                        <div class="relative overflow-hidden">
+                            <img src="./Assets/mens/sneaker.jfif" alt="Sports Sneakers" 
+                                 class="w-full h-auto object-cover transform transition-transform duration-500 group-hover:scale-[1.03] rounded-t-xl">
+                            <button class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-accent-red hover:scale-110 transition-all duration-300">
+                                <i data-lucide="heart" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <div class="p-3 sm:p-4">
+                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">PUMA</p>
+                            <h3 class="font-bold text-primary-dark truncate mt-1">White Sports Sneakers</h3>
+                            <p class="text-sm text-gray-600 mb-2">Running Shoes</p>
+                            <div class="flex items-center space-x-2 text-base">
+                                <span class="font-bold text-primary-dark">₹2,499</span>
+                                <span class="text-xs text-gray-400 line-through">₹4,999</span>
+                                <span class="text-xs font-semibold text-green-600">(50% OFF)</span>
+                            </div>
+                            <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full text-center bg-accent-red text-white py-2 rounded-lg text-sm font-semibold hover:bg-red-600 active:scale-[0.98] transition-all duration-200 shadow-md shadow-red-300">
+                                    ADD TO BAG
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 8: Casual Shirt -->
+                    <div class="product-card bg-product-bg rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 group cursor-pointer border border-gray-100">
+                        <div class="relative overflow-hidden">
+                            <img src="./Assets/mens/denim.jfif  " alt="Denim Casual Shirt" 
+                                 class="w-full h-auto object-cover transform transition-transform duration-500 group-hover:scale-[1.03] rounded-t-xl">
+                            <button class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md text-gray-600 hover:text-accent-red hover:scale-110 transition-all duration-300">
+                                <i data-lucide="heart" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <div class="p-3 sm:p-4">
+                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">LEVI'S</p>
+                            <h3 class="font-bold text-primary-dark truncate mt-1">Slim Fit Denim Casual Shirt</h3>
+                            <p class="text-sm text-gray-600 mb-2">Washed Denim</p>
+                            <div class="flex items-center space-x-2 text-base">
+                                <span class="font-bold text-primary-dark">₹1,499</span>
+                                <span class="text-xs text-gray-400 line-through">₹3,999</span>
+                                <span class="text-xs font-semibold text-green-600">(62% OFF)</span>
+                            </div>
+                            <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full text-center bg-accent-red text-white py-2 rounded-lg text-sm font-semibold hover:bg-red-600 active:scale-[0.98] transition-all duration-200 shadow-md shadow-red-300">
+                                    ADD TO BAG
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Product Card Component -->
+
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 3. FOOTER (Basic) -->
+    <footer class="bg-primary-dark text-white p-6 mt-12">
+        <div class="max-w-7xl mx-auto text-center text-sm">
+            &copy; 2025 R. All Rights Reserved. | RM1 Shopping.
+        </div>
+    </footer>
+
+    <!-- Script to initialize Lucide icons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>
